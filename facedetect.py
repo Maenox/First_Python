@@ -39,7 +39,6 @@ if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 
 	cascade = cv.Load(r'/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
-	##cascade = cv.Load(options.cascade)
 	if len(args) != 1:
 		parser.print_help()
 		sys.exit(1)
@@ -68,7 +67,6 @@ if __name__ == '__main__':
 	if capture:
 		frame_copy = None
 		while True:
-
 			frame = cv.QueryFrame(capture)
 			if not frame:
 				cv.WaitKey(0)
@@ -89,4 +87,4 @@ else:
 	detect_and_draw(image, cascade)
 	cv.WaitKey(0)
 
-	cv.DestroyWindow("result")
+cv.DestroyWindow("result")
