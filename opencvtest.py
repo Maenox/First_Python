@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
-import cv2
 import numpy as np
+import cv2
 
 # 対応付けされた特徴点同士を線で結ぶ
 def drawMatches(im1, kp1, im2, kp2, matches):
