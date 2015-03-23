@@ -1,3 +1,6 @@
+##-------------------------
+##	python facedetect.py --cascade=face.xml 0
+##-------------------------
 import numpy
 import sys
 import cv2
@@ -11,7 +14,7 @@ haar_flags = 0
 
 
 def detect_and_draw(img, cascade):
-	gray = cv.CreateImage((img.width,img.height), 8, 1)
+	gray = cv.CreateImage((img.width,img.height),8,1)
 	small_img = cv.CreateImage((cv.Round(img.width / image_scale),
 	cv.Round (img.height / image_scale)), 8, 1)
 
@@ -40,7 +43,9 @@ if __name__ == '__main__':
 	parser.add_option("-c", "--cascade", action="store", dest="cascade", type="str", help="Haar cascade file, default %default", default = "../data/haarcascades/haarcascade_frontalface_alt.xml")
 	(options, args) = parser.parse_args()
 
-	cascade = cv.Load(r'/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
+	##run in RasPi2
+	##cascade = cv.Load(r'/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
+	cascade = cv.Load(options.cascade)
 	if len(args) != 1:
 		parser.print_help()
 		sys.exit(1)
