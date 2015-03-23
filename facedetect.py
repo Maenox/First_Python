@@ -1,5 +1,6 @@
+import numpy
 import sys
-import cv2.cv as cv
+import cv2
 from optparse import OptionParser
 
 min_size = (20, 20)
@@ -7,6 +8,7 @@ image_scale = 2
 haar_scale = 1.2
 min_neighbors = 2
 haar_flags = 0
+
 
 def detect_and_draw(img, cascade):
 	gray = cv.CreateImage((img.width,img.height), 8, 1)
