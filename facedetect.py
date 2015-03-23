@@ -4,6 +4,7 @@
 import numpy
 import sys
 import cv2
+import cv2.cv as cv
 from optparse import OptionParser
 
 min_size = (20, 20)
@@ -17,7 +18,6 @@ def detect_and_draw(img, cascade):
 	gray = cv.CreateImage((img.width,img.height),8,1)
 	small_img = cv.CreateImage((cv.Round(img.width / image_scale),
 	cv.Round (img.height / image_scale)), 8, 1)
-
 	cv.CvtColor(img, gray, cv.CV_BGR2GRAY)
 
 	cv.Resize(gray, small_img, cv.CV_INTER_LINEAR)
@@ -40,12 +40,15 @@ def detect_and_draw(img, cascade):
 
 if __name__ == '__main__':
 	parser = OptionParser(usage = "usage: %prog [options] [filename|camera_index]")
-	parser.add_option("-c", "--cascade", action="store", dest="cascade", type="str", help="Haar cascade file, default %default", default = "../data/haarcascades/haarcascade_frontalface_alt.xml")
+	parser.add_option("-c","--cascade",action="store",
+						dest="cascade",type="str",
+						help="Haar cascade file,default %default",
+						default = "../data/haarcascades/haarcascade_frontalface_alt.xml")
 	(options, args) = parser.parse_args()
 
 	##run in RasPi2
 	##cascade = cv.Load(r'/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
-	cascade = cv.Load(options.cascade)
+	cascade = cv.Load(r'C:\opencv\sources\data\haarcascades\haarcascade_frontalface_alt.xml')
 	if len(args) != 1:
 		parser.print_help()
 		sys.exit(1)
