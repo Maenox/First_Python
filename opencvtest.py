@@ -24,8 +24,8 @@ def drawMatches(im1, kp1, im2, kp2, matches):
 
 # メイン関数
 def main():
-	im1 = cv2.imread("tdk_fr_ctr_lwr_bottom.jpg",0)# 画像1の取得
-	im2 = cv2.imread("tdk_fr_ctr_lwr_backet.jpg",0)# 画像2の取得
+	im1 = cv2.imread("hoge.jpg",0)# 画像1の取得
+	im2 = cv2.imread("piyo.jpg",0)# 画像2の取得
 	# 特徴点の抽出・特徴量の記述
 	star = cv2.FeatureDetector_create("STAR")
 	brief = cv2.DescriptorExtractor_create("BRIEF")
