@@ -2,7 +2,7 @@
 #FH2PCの通信
 CR = ' '
 LF = ' '
-ESC = 'ESC'
+ESC = 'c'
 TIMEOUT = 0.5
 
 import sys
@@ -10,22 +10,26 @@ import msvcrt
 import serial
 import time
 
-#COM2を開く。ポートは0から数えるので通常COM1は0番目のポートである
+#COM3を開く、FHとの通信
 com01 = serial.Serial(2, timeout=1)
-#com02 = serial.Serial(3, timeout=1)
+#COM4を開く、AXとの通信
+com02 = serial.Serial(3, timeout=1)
 
-#COM1に書きこむ
-com01.write('SHIFT 20,10,0,0,0,0\r')
-
+#中継
 while True:
+    #cキーで終了
     if msvcrt.kbhit():
         inp = msvcrt.getch()
         if(inp == ESC):
             break
-    str = com01.read(30)
-    print str
-    time.sleep(1)
+            com01.close()
+            com02.close()
 
-#終わったらclose
-#続けて書きこむ場合はいちいちcloseしなくてもいい
-com01.close()
+    strAX = com01.read(30)
+    #AXからSHIFT命令が来たら
+    if(strAX.find('SHIFT') == 0):
+        com01.write('MEASURE\r')  #start measure
+        strFX = com01.read(30)  #read FX
+        com01.write('SHIFT' + str(strFX))
+    else:
+        com01.write(str(strFX))
