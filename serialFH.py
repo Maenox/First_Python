@@ -24,7 +24,7 @@ while True:
             break
             com01.close()
             com02.close()
-
+    #strAX is str go to AX from FH
     strAX = com01.read(30)
     #AXからSHIFT命令が来たら
     if(strAX.find('SHIFT') == 0):
