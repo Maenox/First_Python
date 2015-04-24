@@ -33,8 +33,8 @@ while True:
         comAX.write('SHIFT' + str(strFH) + '\n')
         comAX.write('message to AX\n')
         print 'Success SHIFT Command!!'
-        print strFH
+        print str(strFH)
     else:
-        comFH.write(str(strFH))
-        print strAX
-        print strAX
+        strAX = strFH
+        comFH.write(strAX)
+        print 'command is not SHIFT'
