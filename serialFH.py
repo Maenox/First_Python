@@ -1,7 +1,6 @@
-#coding: utf-8
-#FH2PCの通信
-CR = ' '
-LF = ' '
+# coding: utf-8
+CR = '\n'
+LF = '\r'
 ESC = 'c'
 TIMEOUT = 0.5
 
@@ -10,10 +9,10 @@ import msvcrt
 import serial
 import time
 
-#COM3を開く、FHとの通信
-com01 = serial.Serial(2, timeout=1)
-#COM4を開く、AXとの通信
-com02 = serial.Serial(3, timeout=1)
+# COM3を開く、FHとの通信
+comFH = serial.Serial(4, timeout=1)  # COM5
+# COM4を開く、AXとの通信
+comAX = serial.Serial(3, timeout=1)  # COM4
 
 #中継
 while True:
@@ -21,15 +20,21 @@ while True:
     if msvcrt.kbhit():
         inp = msvcrt.getch()
         if(inp == ESC):
+            comFH.close()
+            comAX.close()
             break
-            com01.close()
-            com02.close()
-    #strAX is str go to AX from FH
-    strAX = com01.read(30)
-    #AXからSHIFT命令が来たら
-    if(strAX.find('SHIFT') == 0):
-        com01.write('MEASURE\r')  #start measure
-        strFX = com01.read(30)  #read FX
-        com01.write('SHIFT' + str(strFX))
+
+    strAX = comAX.read(30)
+    strFH = comFH.read(30)
+    # AXからSHIFT命令が来たら
+    if(strAX.find('test') == 0):
+        comFH.write('MEASURE\r\n')  # start measure
+        strFH = comFH.read(30)  # read FH
+        comAX.write('SHIFT' + str(strFH) + '\n')
+        comAX.write('message to AX\n')
+        print 'Success SHIFT Command!!'
+        print strFH
     else:
-        com01.write(str(strFX))
+        comFH.write(str(strFH))
+        print strAX
+        print strAX
