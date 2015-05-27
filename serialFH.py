@@ -14,7 +14,7 @@ comFH = serial.Serial(
     baudrate=38400,
     bytesize=8,
     stopbits=1,
-    timeout=1)
+    timeout=0.5)
 
 # COM1 open serial to AX
 comAX = serial.Serial(
@@ -22,7 +22,7 @@ comAX = serial.Serial(
     baudrate=19200,
     bytesize=7,
     stopbits=1,
-    timeout=1)
+    timeout=0.5)
 
 while True:
     # C key is exit
@@ -50,7 +50,10 @@ while True:
         if(strFH.find('OK') == 0):
             comAX.write('SHIFT ' + strFH[57:] + '\n')
             print 'Success SHIFT 2 Command!!'
+    elif(strAX.find('SHIFT 3') == 0):
+        comFH.write('MEASURE\r')  # start measure Backprint
+        print 'Success SHIFT 3 Command!!'
     else:
         strAX = strFH
         comFH.write(strAX)
-        #  print strAX
+        print '.',
